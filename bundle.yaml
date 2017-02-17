@@ -1,0 +1,80 @@
+series: xenial
+applications:
+  docker:
+    charm: "cs:~tengu-team/docker-3"
+    num_units: 1
+    annotations:
+      "gui-x": 615
+      "gui-y": 482
+    to:
+      - "0"
+  limeds:
+    charm: "cs:~tengu-team/limeds-2"
+    num_units: 2
+    annotations:
+      "gui-x": 488
+      "gui-y": 310
+    to:
+      - "lxd:0"
+      - "lxd:0"
+  haproxy:
+    charm: "haproxy-40"
+    num_units: 1
+    annotations:
+      "gui-x": 915
+      "gui-y": 310
+    to:
+      - "0"
+  influxdb:
+    charm: "cs:~chris.macnaughton/influxdb-4"
+    num_units: 1
+    annotations:
+      "gui-x": 88
+      "gui-y": 482
+    to:
+      - "1"
+  mongodb:
+    charm: "cs:trusty/mongodb-37"
+    num_units: 1
+    annotations:
+      "gui-x": 88
+      "gui-y": 136
+    to:
+      - "2"
+  "limeds-mongodb":
+    charm: "cs:~tengu-team/limeds-mongodb-0"
+    annotations:
+      "gui-x": 372
+      "gui-y": 67
+  "limeds-influxdb":
+    charm: "cs:~tengu-team/limeds-influxdb-0"
+    annotations:
+      "gui-x": 372
+      "gui-y": 644
+  "limeds-installable":
+    charm: "cs:~tengu-team/limeds-installable-0"
+    annotations:
+      "gui-x": 291
+      "gui-y": 336
+relations:
+  - - "limeds:dockerhost"
+    - "docker:dockerhost"
+  - - "limeds:endpoint"
+    - "haproxy:reverseproxy"
+  - - "limeds-mongodb:limeds"
+    - "limeds:limeds-server"
+  - - "limeds-mongodb:mongodb"
+    - "mongodb:mongos"
+  - - "limeds-influxdb:limeds"
+    - "limeds:limeds-server"
+  - - "limeds-influxdb:influxdb"
+    - "influxdb:api"
+  - - "limeds-installable:limeds"
+    - "limeds:limeds-server"
+machines:
+  "0":
+    series: xenial
+  "1":
+    series: xenial
+  "2":
+    series: trusty

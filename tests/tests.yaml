@@ -1,0 +1,16 @@
+tests: "*"
+packages:
+  - amulet
+  - juju-deployer
+  - python-jujuclient
+  - python3-requests
+reset: false
+excludes:
+  - docker
+  - limeds
+  - limeds-installable
+  - limeds-mongodb
+  - limeds-influxdb
+  - influxdb
+  - mongodb
+bundle_deploy: True
