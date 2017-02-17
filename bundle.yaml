@@ -1,7 +1,7 @@
 series: xenial
 applications:
   docker:
-    charm: "cs:~tengu-team/docker-3"
+    charm: "cs:~tengu-team/docker-4"
     num_units: 1
     annotations:
       "gui-x": 615
